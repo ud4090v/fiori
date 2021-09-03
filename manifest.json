@@ -1,0 +1,123 @@
+{
+	"_version": "1.21.0",
+	"sap.app": {
+		"id": "z_tpo_timecard",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+        "title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "3.0.0"
+		}
+	},
+	"supportedThemes": [
+		"sap_hcb",
+		"sap_belize"
+	],
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://detail-view",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "z_tpo_timecard.view.main",
+			"type": "JS"
+		},
+		"resources": {
+            "css": [
+                  {
+                        "uri": "css/main2.css"
+                  }
+            ]
+      },		
+		"dependencies": {
+			"minUI5Version": "1.32.0",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.layout": {},
+				"sap.ui.unified": {},
+				"sap.ushell": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"config": {
+			"resourceBundle": "i18n/i18n.properties",
+			"tempoServiceLocal" : "proxy/http/192.168.210.12:50000/sap/opu/odata/sap/Z_TEMPO_TIMEREC_SRV/",
+			"tempoServiceRuntime" : "/sap/opu/odata/sap/Z_TEMPO_TIMEREC_SRV/",
+			"tempoApprServiceUrl": "/sap/opu/odata/sap/Z_TPO_APPROVAL_SRV/"
+		},
+		"models": {
+      		"i18n": {
+        		"type": "sap.ui.model.resource.ResourceModel",
+         		"settings": {
+          			"bundleName": "z_tpo_timecard.i18n.i18n"
+        			}
+        	}	
+        },			
+		"routing" : {
+			"config" : {
+				"routerClass" : "sap.m.routing.Router",
+				"targetsClass" : "sap.m.routing.Targets",
+				"viewPath" : "z_tpo_timecard",
+				"controlId" : "rootControl",
+				"controlAggregation" : "pages",
+				"viewType" : "JS",
+				"transition" : "show",
+				"bypassed" : {
+					"target" : "tsheet"
+				}
+			},
+			"routes" : [ 
+				{
+					"pattern" : ":?query:",
+					"name" : "timesheet",
+					"target" : "tsheet"
+				}, 
+				{
+					"pattern" : "week",
+					"name" : "weekView",
+					"target" : "tsheet"
+				}, 
+				{
+					"pattern" : "employee/{EmployeeID}:?query:",
+					"name" : "employeeTimesheet",
+					"target" : "tsheet"
+				}, 
+				{
+					"pattern" : "approve:?query:",
+					"name" : "approveTimesheet",
+					"target" : "tsheet"
+				} 
+			],
+			"targets" : {
+				"tsheet" : {
+					"viewType" : "JS",
+					"id" : "timecard",
+					"viewName" : "view.timecard",
+					"viewLevel" : 0
+				},
+				"main" : {
+					"viewType" : "JS",
+					"id" : "main",
+					"viewName" : "view.main",
+					"viewLevel" : 0
+				}
+			}
+		}
+	}
+}
